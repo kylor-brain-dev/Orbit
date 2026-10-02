@@ -1,6 +1,161 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/internal.css"><title>Orbit</title></head>
-<body><div id="root"></div><div id="toast" hidden></div><script src="/internal.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Orbit New Tab</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      color: #ffffff;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background:
+        radial-gradient(
+          circle at 50% 20%,
+          #243d70 0%,
+          #111a30 38%,
+          #080d18 100%
+        );
+    }
+
+    .container {
+      width: min(760px, 90%);
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 72px;
+      font-weight: 800;
+      letter-spacing: -5px;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      color: #91a0ba;
+      font-size: 16px;
+      margin-bottom: 34px;
+    }
+
+    .search {
+      width: 100%;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 5px 7px 5px 22px;
+      border-radius: 32px;
+      background: rgba(24, 35, 59, 0.95);
+      border: 1px solid #3a4d70;
+      box-shadow:
+        0 20px 70px rgba(0, 0, 0, 0.25);
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: white;
+      font-size: 17px;
+    }
+
+    input::placeholder {
+      color: #7f8ca7;
+    }
+
+    button {
+      height: 46px;
+      padding: 0 20px;
+      border: 0;
+      border-radius: 24px;
+      background: #496b9f;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background: #587cad;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <div class="logo">Orbit</div>
+
+    <div class="subtitle">
+      A real Chromium-powered browser.
+    </div>
+
+    <form class="search">
+      <input
+        id="search"
+        autofocus
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="Search the web or enter a URL"
+      >
+
+      <button type="submit">
+        Search
+      </button>
+    </form>
+  </main>
+
+  <script>
+    const form = document.querySelector(".search");
+    const input = document.querySelector("#search");
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const value = input.value.trim();
+
+      if (!value) {
+        return;
+      }
+
+      let url;
+
+      if (/^https?:\\/\\//i.test(value)) {
+        url = value;
+      } else if (
+        /^[a-z0-9-]+\\.[a-z]{2,}/i.test(value)
+      ) {
+        url = "https://" + value;
+      } else {
+        url =
+          "https://www.google.com/search?q=" +
+          encodeURIComponent(value);
+      }
+
+      location.href = url;
+    });
+  </script>
+</body>
+</html>
