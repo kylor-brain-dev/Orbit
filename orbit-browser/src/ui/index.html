@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: https: http:">
+<link rel="stylesheet" href="ui.css"><title>Orbit</title></head>
+<body>
+<div id="app">
+  <div id="tabs"></div>
+  <div id="bar">
+    <button id="back" title="Back (Alt+Left)">←</button>
+    <button id="fwd" title="Forward (Alt+Right)">→</button>
+    <button id="rel" title="Reload (Ctrl+R)">↻</button>
+    <button id="home" title="Home (Alt+Home)">⌂</button>
+    <div id="omni">
+      <button id="sec" title="Site information"></button>
+      <input id="url" placeholder="Search or enter address" autocomplete="off" spellcheck="false">
+      <button id="star" title="Bookmark this page (Ctrl+D)">☆</button>
+    </div>
+    <span id="priv" hidden>Private</span>
+    <button id="conn" title="Connection"></button>
+    <button id="dl" title="Downloads (Ctrl+J)">⤓</button>
+    <button id="dots" title="Menu">⋮</button>
+  </div>
+  <div id="bm"></div>
+</div>
+<div id="ov" hidden><div id="panel"></div></div>
+<script src="ui.js"></script>
+</body></html>
