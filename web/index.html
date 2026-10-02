@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orbit Browser</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <main class="landing">
+    <div class="orbit-logo">◉</div>
+    <h1>Orbit Browser</h1>
+    <p>Open Orbit Web</p>
+    <button id="openOrbit" class="open-button">Open Orbit</button>
+  </main>
+
+  <div id="modal" class="modal hidden">
+    <div class="browser">
+
+      <header class="browser-header">
+
+        <div class="titlebar">
+          <div class="brand">
+            <span class="brand-icon">◉</span>
+            <span>Orbit</span>
+          </div>
+
+          <div class="window-actions">
+            <button id="minimize" title="Minimize">−</button>
+            <button id="maximize" title="Maximize">□</button>
+            <button id="closeOrbit" class="close" title="Close">×</button>
+          </div>
+        </div>
+
+        <div class="toolbar">
+
+          <div class="navigation">
+            <button id="back" title="Back">←</button>
+            <button id="forward" title="Forward">→</button>
+            <button id="reload" title="Reload">↻</button>
+            <button id="home" title="Home">⌂</button>
+          </div>
+
+          <form id="addressForm" class="address-form">
+            <span class="secure-icon">⌕</span>
+            <input
+              id="address"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Search or enter address"
+            >
+          </form>
+
+          <div class="toolbar-actions">
+            <button id="bookmark" title="Bookmark">☆</button>
+            <button id="newTab" title="New tab">＋</button>
+          </div>
+
+        </div>
+
+        <div id="tabs" class="tabs"></div>
+
+      </header>
+
+      <section class="browser-content">
+
+        <div id="newTabPage" class="new-tab-page">
+
+          <div class="new-tab-logo">◉</div>
+          <h2>Orbit</h2>
+
+          <form id="searchForm" class="main-search">
+            <input
+              id="search"
+              autocomplete="off"
+              placeholder="Search the web or enter a URL"
+            >
+            <button type="submit">Search</button>
+          </form>
+
+          <div class="quick-actions">
+            <button data-url="https://www.google.com">Google</button>
+            <button data-url="https://www.wikipedia.org">Wikipedia</button>
+            <button data-url="https://github.com">GitHub</button>
+          </div>
+
+          <p class="notice">
+            Orbit Web runs inside your existing browser. Some websites
+            prevent being displayed inside embedded windows.
+          </p>
+
+        </div>
+
+        <iframe
+          id="pageFrame"
+          class="page-frame hidden"
+          title="Orbit Web content"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+
+        <div id="blockedPage" class="blocked-page hidden">
+          <div class="blocked-icon">↗</div>
+          <h2>This page can't be displayed here</h2>
+          <p>
+            This website does not allow embedded viewing.
+            You can open it normally in your browser instead.
+          </p>
+          <button id="openExternal">Open in browser</button>
+        </div>
+
+      </section>
+
+      <footer class="statusbar">
+        <span id="status">Ready</span>
+        <span>Orbit Web</span>
+      </footer>
+
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
