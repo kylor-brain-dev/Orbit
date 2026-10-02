@@ -1,0 +1,33 @@
+'use strict';
+// Offline checks: syntax of every source file + URL validator behaviour. Run: npm test
+const { execFileSync } = require('child_process'), fs = require('fs'), path = require('path'), assert = require('assert');
+const walk = d => fs.readdirSync(d, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]);
+const js = walk(path.join(__dirname, '..', 'src')).filter(f => f.endsWith('.js'));
+js.forEach(f => execFileSync(process.execPath, ['--check', f]));
+console.log('syntax OK:', js.length, 'files');
+
+const { resolve } = require('../src/main/url');
+const S = { engine: 'duckduckgo', customSearch: '' };
+const T = (input, check, label) => { const r = resolve(input, S); assert(check(r), (label || input) + ' -> ' + JSON.stringify(r)); };
+T('https://example.com', r => r.url === 'https://example.com/');
+T('http://example.com', r => r.url === 'http://example.com/');
+T('example.com', r => r.url === 'https://example.com/');
+T('www.example.com/page?x=1#f', r => r.url === 'https://www.example.com/page?x=1#f');
+T('github.com', r => r.url === 'https://github.com/');
+T('example.com:8080/a', r => r.url === 'https://example.com:8080/a');
+T('localhost:3000', r => r.url === 'http://localhost:3000/');
+T('192.168.1.1', r => r.url === 'http://192.168.1.1/');
+T('how to learn javascript', r => r.search && r.url === 'https://duckduckgo.com/?q=how%20to%20learn%20javascript');
+T('c++ & "quotes" #1', r => r.search && r.url.includes('c%2B%2B'));
+T('münchen.de', r => r.url.startsWith('https://xn--mnchen-3ya.de'));
+T('', r => r.error === 'empty');
+T('   ', r => r.error === 'empty');
+for (const bad of ['javascript:alert(1)', 'data:text/html,<script>1</script>', 'file:///etc/passwd', 'ftp://x.com', 'vbscript:x', 'blob:https://a/b']) T(bad, r => !!r.error && !r.url, bad);
+T('http://', r => !!r.error);
+T('browser://settings', r => r.url === 'browser://settings');
+T('browser://settings#network', r => r.url === 'browser://settings#network');
+T('browser://ui/index.html', r => !!r.error, 'internal ui host must not be navigable');
+S.engine = 'bing'; T('cats', r => r.url === 'https://www.bing.com/search?q=cats');
+S.engine = 'custom'; S.customSearch = 'https://s.example/?q=%s'; T('cats', r => r.url === 'https://s.example/?q=cats');
+S.customSearch = 'javascript:%s'; T('cats', r => r.url.startsWith('https://duckduckgo.com'), 'unsafe custom engine falls back');
+console.log('url validator OK');

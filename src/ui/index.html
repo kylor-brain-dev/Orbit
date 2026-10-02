@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self';"
+  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orbit Browser</title>
+  <link rel="stylesheet" href="./ui.css">
+</head>
+
+<body>
+  <header class="browser">
+
+    <div class="tabs-row">
+      <div id="tabs" class="tabs"></div>
+
+      <button id="newTab" class="new-tab" title="New tab">
+        +
+      </button>
+    </div>
+
+    <div class="toolbar">
+
+      <button id="back" class="nav-button" title="Back">
+        ←
+      </button>
+
+      <button id="forward" class="nav-button" title="Forward">
+        →
+      </button>
+
+      <button id="reload" class="nav-button" title="Reload">
+        ↻
+      </button>
+
+      <button id="home" class="nav-button" title="Home">
+        ⌂
+      </button>
+
+      <form id="addressForm" class="address-form">
+        <span class="security" id="security">●</span>
+        <input
+          id="address"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Search or enter web address"
+        >
+      </form>
+
+      <button id="menu" class="menu-button" title="Orbit menu">
+        ⋮
+      </button>
+
+    </div>
+
+    <div id="status" class="status"></div>
+
+  </header>
+
+  <script src="./ui.js"></script>
+</body>
+</html>
